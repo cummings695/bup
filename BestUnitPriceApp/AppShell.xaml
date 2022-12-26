@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="BestUnitPriceApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:BestUnitPriceApp.Views"
+    xmlns:local="clr-namespace:BestUnitPriceApp"
+    xmlns:ctl="clr-namespace:BestUnitPriceApp.Pages.Controls">
+
+
+
+    <ShellContent
+        Shell.NavBarIsVisible="true"
+        FlyoutItemIsVisible="False"
+        Title="Loading"
+        Icon="iconblank.png"
+        ContentTemplate="{DataTemplate views:LoadingPage}"
+        Route="LoadingPage" />
+
+    <ShellContent
+        Shell.NavBarIsVisible="false"
+        FlyoutItemIsVisible="False"
+        Title="Login"
+        Icon="iconblank.png"
+        ContentTemplate="{DataTemplate views:LoginPage}"
+        Route="LoginPage" />
+
+    <ShellContent
+        Shell.NavBarIsVisible="true"
+        Title="Items"
+        Icon="iconlistdetail.png"
+        ContentTemplate="{DataTemplate views:ItemsPage}"
+        Route="ItemsPage" />
+    <ShellContent
+        Shell.NavBarIsVisible="true"
+        Title="Restaurants"
+        Icon="iconlistdetail.png"
+        ContentTemplate="{DataTemplate views:RestaurantsPage}"
+        Route="RestaurantsPage" />
+    <ShellContent
+        Shell.NavBarIsVisible="true"
+        Title="Vendors"
+        Icon="iconlistdetail.png"
+        ContentTemplate="{DataTemplate views:VendorsPage}"
+        Route="VendorsPage" />
+
+    <Shell.FlyoutHeaderTemplate>
+        <DataTemplate>
+            <Grid BackgroundColor="#bdbbb7" HeightRequest="100">
+
+                <ctl:LogoContentView
+                IsNavigation="true"
+                HorizontalOptions="CenterAndExpand"></ctl:LogoContentView>
+            </Grid>
+        </DataTemplate>
+    </Shell.FlyoutHeaderTemplate>
+</Shell>

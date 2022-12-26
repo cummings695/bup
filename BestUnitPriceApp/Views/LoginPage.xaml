@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BestUnitPriceApp.Views.LoginPage"
+             xmlns:ctl="clr-namespace:BestUnitPriceApp.Pages.Controls"
+             Title="LoginPage">
+
+
+    <Grid RowDefinitions="auto, 100, *" ColumnDefinitions="*">
+        <Border Grid.Row="0">
+
+        </Border>
+        <Grid Grid.Row="1" >
+            <ctl:LogoContentView
+                IsNavigation="False"
+                HorizontalOptions="CenterAndExpand"></ctl:LogoContentView>
+        </Grid>
+        <VerticalStackLayout
+            Grid.Row="2"
+            Padding="20,60,20,0"
+            Spacing="5">
+            <Label Text="LOGIN"
+                FontSize="38"
+                FontFamily="BlackOpsOne"
+                HorizontalTextAlignment="Center"/>
+            <Entry
+                HeightRequest="60"
+                Placeholder="Email"
+                FontSize="Body"
+                Text="{Binding Email}" />
+            <Entry
+                HeightRequest="60"
+                FontSize="Body"
+                IsPassword="True"
+                Placeholder="Password"
+                Text="{Binding Password}" />
+
+            <Button
+                Margin="0,10,0,0"
+                Command="{Binding ValidateLoginCommand}"
+                CornerRadius="5"
+                HeightRequest="50"
+                Padding="0,0,0,0"
+                Text="Log in"
+                FontFamily="BlackOpsOne"
+                TextColor="White" />
+            <Label
+                FontAttributes="Italic"
+                FontSize="18"
+                HorizontalOptions="Center"
+                Text="{Binding ErrorMessage}"
+                TextColor="DarkRed"
+                x:Name="CounterLabel" />
+
+            <Label
+                FontSize="Medium"
+                HorizontalOptions="Center"
+                IsVisible="False"
+                Text="Forgotten password?" />
+            <ActivityIndicator
+                Color="{StaticResource Primary}"
+                IsVisible="{Binding ValidateLoginCommand.IsRunning}"
+                IsRunning="{Binding ValidateLoginCommand.IsRunning}" />
+        </VerticalStackLayout>
+    </Grid>
+
+</ContentPage>
