@@ -73,7 +73,7 @@ public class RestaurantService : SecuredService, IRestaurantService
                 return await response.Content.ReadFromJsonAsync<List<Restaurant>>(options);
             }
         }
-        catch (Exception e)
+        catch
         {
             //Console.WriteLine(e);
             var text = string.Empty;

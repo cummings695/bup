@@ -3,20 +3,30 @@ namespace BestUnitPriceApp.Pages.Controls;
 
 public class LogoContentView : ContentView
 {
-    public static readonly BindableProperty IsNavigationProperty = BindableProperty.Create(nameof(IsNavigation), typeof(bool), typeof(LogoContentView), default(bool));
+
+    public bool IsNavigation
+    {
+        get => (bool)GetValue(IsNavigationProperty);
+        set => SetValue(IsNavigationProperty, value);
+    }
+
+    public static readonly BindableProperty IsNavigationProperty = BindableProperty.Create(
+        nameof(IsNavigation), typeof(bool), typeof(LogoContentView));
+
 
     public LogoContentView()
     {
+        var fontSize = IsNavigation ? 28 : 28; // 28 / 36
         var parent = new HorizontalStackLayout();
         var logo = new Label
         {
             FontFamily = "FontAwesome",
-            FontSize = IsNavigation ? 24 : 32,
+            FontSize = fontSize-2,
+            Margin = new Thickness(0, 5, 0, 0),
             Text = Utilities.FontAwesomeHelper.TruckRampBox,
             VerticalTextAlignment = TextAlignment.Center
         };
         parent.Add(logo);
-        var fontSize = IsNavigation ? 24 : 36;
         Console.Write(fontSize);
 
         var best = new Label
@@ -56,11 +66,4 @@ public class LogoContentView : ContentView
         parent.Add(price);
         this.Content = parent;
     }
-
-    public bool IsNavigation
-    {
-        get => (bool)GetValue(IsNavigationProperty);
-        set => SetValue(IsNavigationProperty, value);
-    }
 }
-

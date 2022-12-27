@@ -2,17 +2,38 @@
 
 public partial class RestaurantsViewModel : BaseViewModel
 {
-    readonly SampleDataService dataService;
+    private readonly IRestaurantService _restaurantService;
+    private readonly SelectedRestaurantTracker _selectedRestaurantTracker;
+    private readonly IConnectivity _connectivity;
+    private readonly ICurrentRestaurantService _currentRestaurantService;
+    private readonly RestaurantReporter _reporter; 
 
     [ObservableProperty]
     bool isRefreshing;
 
     [ObservableProperty]
-    ObservableCollection<SampleItem> items;
+    ObservableCollection<Restaurant> items;
 
-    public RestaurantsViewModel(SampleDataService service)
+    [ObservableProperty]
+    private Restaurant _selectedRestaurant;
+    
+    public RestaurantsViewModel(
+        IRestaurantService restaurantService,
+        ICurrentUserService currentUserService,
+        SelectedRestaurantTracker selectedRestaurantTracker,
+        ICurrentRestaurantService currentRestaurantService,
+        IConnectivity connectivity)
     {
-        dataService = service;
+        _selectedRestaurantTracker = selectedRestaurantTracker;
+        _restaurantService = restaurantService;
+        _connectivity = connectivity;
+        _currentRestaurantService = currentRestaurantService;
+        _reporter = new RestaurantReporter("Default");
+        _reporter.Subscribe(_selectedRestaurantTracker);
+
+        Title = "Restaurants";
+        
+        SelectedRestaurant = _currentRestaurantService.CurrentRestaurant;    
     }
 
     [RelayCommand]
@@ -33,7 +54,7 @@ public partial class RestaurantsViewModel : BaseViewModel
     [RelayCommand]
     public async Task LoadMore()
     {
-        var items = await dataService.GetItems();
+        var items = await _restaurantService.GetAsync();
 
         foreach (var item in items)
         {
@@ -43,11 +64,11 @@ public partial class RestaurantsViewModel : BaseViewModel
 
     public async Task LoadDataAsync()
     {
-        Items = new ObservableCollection<SampleItem>(await dataService.GetItems());
+        Items = new ObservableCollection<Restaurant>(await _restaurantService.GetAsync());
     }
 
     [RelayCommand]
-    private async void GoToDetails(SampleItem item)
+    private async void GoToDetails(Restaurant item)
     {
         await Shell.Current.GoToAsync(nameof(RestaurantsDetailPage), true, new Dictionary<string, object>
         {

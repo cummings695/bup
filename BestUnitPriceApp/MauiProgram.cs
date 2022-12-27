@@ -30,6 +30,29 @@ public static class MauiProgram
                 fonts.AddFont("SF-Pro-Display-Regular.otf", "Frisco");
             });
 
+		builder.Services.AddHttpClient<IRestaurantService, RestaurantService>();
+		//.SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
+		//.AddPolicyHandler(GetRetryPolicy());
+		/**/
+		builder.Services.AddTransient<HttpClient>();
+		builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
+		builder.Services.AddSingleton<IGeolocation>(Geolocation.Default);
+		builder.Services.AddSingleton<IMap>(Map.Default);
+
+		builder.Services.AddTransient<IAuthenticationService, AuthenticationService>();
+		builder.Services.AddSingleton<ICurrentUserService, CurrentUserService>();
+		builder.Services.AddTransient<IRestaurantService, RestaurantService>();
+		builder.Services.AddTransient<IBatchService, BatchService>();
+		builder.Services.AddTransient<IOrderService, OrderService>();
+		builder.Services.AddTransient<IZoneService, ZoneService>();
+		builder.Services.AddTransient<IInventoryItemService, InventoryItemService>();
+		builder.Services.AddTransient<IUnitService, UnitService>();
+
+		var selectedRestaurantTracker = new SelectedRestaurantTracker();
+		builder.Services.AddSingleton(selectedRestaurantTracker);
+		builder.Services.AddSingleton<ICurrentRestaurantService>(selectedRestaurantTracker);
+
+		
         builder.Services.AddSingleton<LoginViewModel>();
         builder.Services.AddSingleton<LoginPage>();
 

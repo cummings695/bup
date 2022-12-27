@@ -16,10 +16,15 @@ internal class InventoryItemService : BaseEntityService<InventoryItem>, IInvento
         _currentUserService = currentUserService;
     }
 
-    public async Task<List<InventoryItem>> GetByZoneAsync(long zoneId)
+    public async Task<List<InventoryItem>> GetByZoneAsync(long zoneId, int? page, int? pageSize)
     {
-        Uri uri = new Uri(string.Format(Constants.RestUrl, $"api/inventoryitems?zoneid={zoneId}"));
+        var url = $"api/inventoryitems?zoneid={zoneId}";
+        if (page.HasValue && pageSize.HasValue)
+        {
+            url += $"&page={page}&pagesize={pageSize}";
+        }
         
+        Uri uri = new Uri(string.Format(Constants.RestUrl, url));
         try
         {
             using var request = this.GetHttpRequestMessage(_currentUserService.Get(), HttpMethod.Get, uri);

@@ -8,5 +8,6 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(VendorsDetailPage), typeof(VendorsDetailPage));
         Routing.RegisterRoute(nameof(RestaurantsDetailPage), typeof(RestaurantsDetailPage));
         Routing.RegisterRoute(nameof(ItemsDetailPage), typeof(ItemsDetailPage));
+        Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
 	}
 }

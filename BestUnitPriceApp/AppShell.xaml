@@ -7,8 +7,6 @@
     xmlns:local="clr-namespace:BestUnitPriceApp"
     xmlns:ctl="clr-namespace:BestUnitPriceApp.Pages.Controls">
 
-
-
     <ShellContent
         Shell.NavBarIsVisible="true"
         FlyoutItemIsVisible="False"
@@ -47,10 +45,10 @@
     <Shell.FlyoutHeaderTemplate>
         <DataTemplate>
             <Grid BackgroundColor="#bdbbb7" HeightRequest="100">
-
                 <ctl:LogoContentView
-                IsNavigation="true"
-                HorizontalOptions="CenterAndExpand"></ctl:LogoContentView>
+                    IsNavigation="True"
+                    HorizontalOptions="CenterAndExpand">
+                </ctl:LogoContentView>
             </Grid>
         </DataTemplate>
     </Shell.FlyoutHeaderTemplate>
