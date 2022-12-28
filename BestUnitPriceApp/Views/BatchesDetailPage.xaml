@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:BestUnitPriceApp.ViewModels"
+             xmlns:models="clr-namespace:BestUnitPriceApp.Models"
+             x:Class="BestUnitPriceApp.Views.BatchesDetailPage"
+             x:DataType="vm:BatchesDetailViewModel">
+    
+    <Grid ColumnDefinitions="*">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+            <CollectionView Grid.Row="0"
+                  
+                            ItemsSource="{Binding Batch.Orders}" 
+                            SelectionMode="None">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout
+                            HorizontalItemSpacing="5"
+                            Orientation="Vertical"
+                            Span="1"
+                            VerticalItemSpacing="5" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Order">
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Complete"
+                                           Command="{Binding Source={RelativeSource AncestorType={x:Type vm:BatchesDetailViewModel}}, Path=CompleteOrderCommand}"
+                                           CommandParameter="{Binding .}">
+                                    </SwipeItem>
+                                    <SwipeItem Text="Scan"
+                                           Command="{Binding Source={RelativeSource AncestorType={x:Type vm:BatchesDetailViewModel}}, Path=ScanOrderCommand}"
+                                           CommandParameter="{Binding .}">
+                                    </SwipeItem>
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                        <Frame Margin="5" Padding="5" HeightRequest="60">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:BatchesDetailViewModel}}, Path=GoToDetailsCommand}" CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
+                            <Grid RowDefinitions="*,*" ColumnDefinitions="auto,*">
+
+                                <Label Grid.Row="0" Grid.Column="0"
+                                           FontAttributes="Bold"
+                                           FontSize="24"
+                                           HorizontalTextAlignment="Start"
+                                           Text="{Binding Vendor.DisplayName}" />
+                                <Label Grid.Row="0" Grid.Column="1"
+                                           Text="{Binding Number, StringFormat='Order # {0}'}" 
+                                           HorizontalTextAlignment="End"
+                                           Padding="5" />
+                                <Label Grid.Row="1" Grid.Column="1"
+                                           Text="{Binding TotalPrice, StringFormat='$ {0:F2}'}" 
+                                           HorizontalTextAlignment="End"
+                                           Padding="5" />
+                                <Label Grid.Row="1" Grid.Column="0" 
+                                           Text="{Binding Status.Code}" 
+                                           FontSize="Micro"
+                                           VerticalTextAlignment="Center"/>
+
+                            </Grid>
+
+                        </Frame>
+
+                    </SwipeView>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+        <Frame Grid.Row="1" Grid.ColumnSpan="2" 
+               BackgroundColor="#F1F1F1"
+               Padding="5">
+            <Grid ColumnDefinitions="*,*,*,*,*"
+                  RowDefinitions="*,*"
+                  Padding="0">
+                <Label Grid.Row="0" Grid.Column="0"                             
+                       Text="Found" />
+                <Label Grid.Row="0" Grid.Column="1"       
+                        Text="Lost" />
+                <Label Grid.Row="0" Grid.Column="2"       
+                        Text="Net" />
+                <Label Grid.Row="0" Grid.Column="3"       
+                        Text="Net %" />
+                <Label Grid.Row="0" Grid.Column="4"       
+                        Text="Total" />
+
+                <Label Grid.Row="1" Grid.Column="0"       
+                        Text="{Binding Batch.CostSavings.Found, StringFormat='{0:F2}'}"
+                        TextColor="Green" />
+                <Label Grid.Row="1" Grid.Column="1"       
+                        Text="{Binding Batch.CostSavings.Lost, StringFormat='{0:F2}'}"
+                        TextColor="DarkRed" />
+                <Label Grid.Row="1" Grid.Column="2"       
+                        Text="{Binding Batch.CostSavings.Net, StringFormat='{0:F2}'}"
+                        TextColor="Blue" />
+                <Label Grid.Row="1" Grid.Column="3"       
+                        Text="{Binding Batch.CostSavings.NetPercent, StringFormat='{0:F2} %'}"
+                        TextColor="Blue" />
+                <Label Grid.Row="1" Grid.Column="4"       
+                        Text="{Binding Batch.CostSavings.Total, StringFormat='{0:F2}'}"
+                        TextColor="Black" />
+            </Grid>
+        </Frame>
+    </Grid>
+</ContentPage>

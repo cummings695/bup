@@ -5,16 +5,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:BestUnitPriceApp.Views"
     xmlns:local="clr-namespace:BestUnitPriceApp"
-    xmlns:ctl="clr-namespace:BestUnitPriceApp.Pages.Controls">
+    xmlns:controls="clr-namespace:BestUnitPriceApp.Views.Controls">
 
-    <!--<ShellContent
+    <ShellContent
         Shell.NavBarIsVisible="true"
         FlyoutItemIsVisible="False"
         Title="Loading"
         Icon="iconblank.png"
         ContentTemplate="{DataTemplate views:LoadingPage}"
-        Route="LoadingPage" />-->
+        Route="LoadingPage" />
 
+    
     <ShellContent
         Shell.NavBarIsVisible="false"
         FlyoutItemIsVisible="False"
@@ -29,12 +30,22 @@
         Icon="iconlistdetail.png"
         ContentTemplate="{DataTemplate views:ItemsPage}"
         Route="ItemsPage" />
+  
+    <ShellContent
+        Shell.NavBarIsVisible="true"
+        Shell.NavBarHasShadow="True"
+        Title="Order History"
+        Icon="iconlistdetail.png"
+        ContentTemplate="{DataTemplate views:BatchesPage}"
+        Route="BatchesPage" />
+    
     <ShellContent
         Shell.NavBarIsVisible="true"
         Title="Restaurants"
         Icon="iconlistdetail.png"
         ContentTemplate="{DataTemplate views:RestaurantsPage}"
         Route="RestaurantsPage" />
+    
     <ShellContent
         Shell.NavBarIsVisible="true"
         Title="Vendors"
@@ -44,11 +55,11 @@
 
     <Shell.FlyoutHeaderTemplate>
         <DataTemplate>
-            <Grid BackgroundColor="#bdbbb7" HeightRequest="100">
-                <ctl:LogoContentView
-                    IsNavigation="True"
-                    HorizontalOptions="CenterAndExpand">
-                </ctl:LogoContentView>
+            <Grid BackgroundColor="#bdbbb7" >
+                <controls:LogoView
+                    Size="36">
+                    
+                </controls:LogoView>
             </Grid>
         </DataTemplate>
     </Shell.FlyoutHeaderTemplate>

@@ -46,7 +46,7 @@ public partial class ItemsViewModel : BaseViewModel, IObserver<Restaurant>, IDis
         _page = 1;
         try
         {
-            await LoadZonesAsync();
+            //await LoadZonesAsync();
             await LoadDataAsync();
         }
         finally
@@ -75,6 +75,7 @@ public partial class ItemsViewModel : BaseViewModel, IObserver<Restaurant>, IDis
 
     public async Task LoadDataAsync()
     {
+        _page = 1;
         if (_connectivity.NetworkAccess != NetworkAccess.Internet)
         {
             await Shell.Current.DisplayAlert("No connectivity!", $"Please check internet and try again.", "OK");
@@ -104,8 +105,9 @@ public partial class ItemsViewModel : BaseViewModel, IObserver<Restaurant>, IDis
             Zones = result.Match(
                 z => { return new ObservableCollection<Zone>(z.OrderBy(z => z.SortOrder)); },
                 e => { return new ObservableCollection<Zone>(); });
-            //Zones = new ObservableCollection<Zone>(result.Zones.OrderBy(z => z.SortOrder));
+
             Zones.Add(new Zone { Id = -1, Name = "NO ZONE" });
+            
             if (Zones.Any())
                 this.SelectedZone = Zones.First();
         }

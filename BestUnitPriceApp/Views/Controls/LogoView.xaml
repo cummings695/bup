@@ -6,39 +6,38 @@
     x:Class="BestUnitPriceApp.Views.Controls.LogoView"
     Padding="5"
     VerticalOptions="Center">
-
-        <Label
-            FontFamily="FAS"
-            FontSize="{Binding LogoSize}"
-            Margin="0,13,0,0"
-            Text="{x:Static util:FontAwesomeHelper.TruckRampBox}" />
-        <Label 
-            FontAttributes="Bold"
-            FontFamily="BlackOpsOne"
-            FontSize="{Binding LogoSize}"
-            HorizontalTextAlignment="Center"
-            Text="Best"
-            TextColor="{StaticResource White}"
-            TextTransform="Uppercase"
-            VerticalTextAlignment="Center" />
-        <Label
-            FontAttributes="Bold"
-            FontFamily="BlackOpsOne"
-            FontSize="{Binding LogoSize}"
-            HorizontalTextAlignment="Center"
-            Text="Unit"
-            TextColor="{StaticResource Secondary}"
-            TextTransform="Uppercase"
-            VerticalTextAlignment="Center" />
-        <Label
-            FontAttributes="Bold"
-            FontFamily="BlackOpsOne"
-            FontSize="{Binding LogoSize}"
-            HorizontalTextAlignment="Center"
-            Text="Price"
-            TextColor="{StaticResource Primary}"
-            TextTransform="Uppercase"
-            VerticalTextAlignment="Center" />
-        
-        <Label Text="{Binding Size}"></Label>
-    </HorizontalStackLayout>
+    <Label
+        FontFamily="FontAwesome"
+        FontSize="{Binding LogoSize}"
+        Margin="0,13,0,0"
+        Text="{x:Static util:FontAwesomeHelper.TruckRampBox}" />
+    <Label 
+        FontAttributes="Bold"
+        FontFamily="BlackOpsOne"
+        FontSize="{Binding LogoSize}"
+        HorizontalTextAlignment="Center"
+        Text="Best"
+        TextColor="{StaticResource White}"
+        TextTransform="Uppercase"
+        VerticalTextAlignment="Center" />
+    <Label
+        FontAttributes="Bold"
+        FontFamily="BlackOpsOne"
+        FontSize="{Binding LogoSize}"
+        HorizontalTextAlignment="Center"
+        Text="Unit"
+        TextColor="{StaticResource Secondary}"
+        TextTransform="Uppercase"
+        VerticalTextAlignment="Center" />
+    <Label
+        FontAttributes="Bold"
+        FontFamily="BlackOpsOne"
+        FontSize="{Binding LogoSize}"
+        HorizontalTextAlignment="Center"
+        Text="Price"
+        TextColor="{StaticResource Primary}"
+        TextTransform="Uppercase"
+        VerticalTextAlignment="Center" />
+    
+    <Label Text="{Binding Size}"></Label>
+</HorizontalStackLayout>

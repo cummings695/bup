@@ -14,6 +14,16 @@
                 ItemsSource="{Binding Items}"
                 RemainingItemsThreshold="10"
                 RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}">
+                
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout Margin="5">
+                        <Label Margin="20"
+                               HorizontalTextAlignment="Center"
+                               FontSize="Large"
+                               Text="No Items Found" />
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="m:InventoryItem">
                         <Frame Margin="4" Padding="12">

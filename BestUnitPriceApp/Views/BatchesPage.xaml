@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:m="clr-namespace:BestUnitPriceApp.Models"
+             xmlns:vm="clr-namespace:BestUnitPriceApp.ViewModels"
+             xmlns:util="clr-namespace:BestUnitPriceApp.Utilities"
+             x:DataType="vm:BatchesViewModel"
+             x:Class="BestUnitPriceApp.Views.BatchesPage">
+
+    <RefreshView Command="{Binding RefreshingCommand}" IsRefreshing="{Binding IsRefreshing}">
+        <Grid>
+            <CollectionView
+                ItemsSource="{Binding Batches}"
+                RemainingItemsThreshold="10"
+                RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}">
+                <CollectionView.EmptyView>
+                    <StackLayout
+                        HorizontalOptions="Center"
+                        Margin="5"
+                        Orientation="Vertical">
+                        <Label
+                            FontSize="10"
+                            HorizontalTextAlignment="Center"
+                            Text="Pull to refresh" />
+                        <Label
+                            HorizontalTextAlignment="Center"
+                            Margin="20"
+                            Text="No Order History Found" />
+                    </StackLayout>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="m:Batch">
+                        <Frame Padding="0" BorderColor="Transparent">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:BatchesViewModel}}, Path=GoToDetailsCommand}"
+                                    CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
+                            <Border Margin="5,15,5,15">
+                                <Border.Shadow>
+                                    <Shadow Brush="Black"
+                                            Offset="5,5"
+                                            Radius="10"
+                                            Opacity="0.8" />
+                                </Border.Shadow>
+                                <StackLayout
+                                    Margin="0"
+                                    Orientation="Horizontal"
+                                    Padding="0">
+                                    <BoxView
+                                        Color="{StaticResource BoxColor}"
+                                        Margin="0"
+                                        WidthRequest="4" />
+                                    <Grid
+                                        BackgroundColor="White"
+                                        HorizontalOptions="FillAndExpand"
+                                        Margin="0"
+                                        Padding="0"
+                                        VerticalOptions="FillAndExpand">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid
+                                            BackgroundColor="{StaticResource White}"
+                                            Grid.Row="0"
+                                            HorizontalOptions="FillAndExpand"
+                                            Margin="0"
+                                            Padding="0"
+                                            VerticalOptions="FillAndExpand">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="Large"
+                                                Grid.Row="0"
+                                                HorizontalTextAlignment="Start"
+                                                Margin="0"
+                                                Text="{Binding Number}"
+                                                VerticalTextAlignment="Center" />
+                                            <Label
+                                                FontSize="Small"
+                                                Grid.Row="1"
+                                                Margin="0"
+                                                Text="{Binding Status.Description}"
+                                                VerticalTextAlignment="Start" />
+                                            <StackLayout Grid.Row="2" Orientation="Horizontal">
+                                                <Label
+                                                    FontFamily="FontAwesome"
+                                                    FontSize="Micro"
+                                                    Margin="0,0,0,0"
+                                                    Text="{x:Static util:FontAwesomeHelper.Calendar}"
+                                                    VerticalOptions="Center" />
+                                                <Label
+                                                    FontSize="Micro"
+                                                    HorizontalTextAlignment="Start"
+                                                    Text="{Binding OrderDate, StringFormat='{0:MM/dd/yyyy}'}"
+                                                    VerticalTextAlignment="Center" />
+                                            </StackLayout>
+                                        </Grid>
+
+                                        <Grid
+                                            BackgroundColor="#F1F1F1"
+                                            Grid.Row="1"
+                                            Padding="5">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <Label
+                                                Grid.Column="0"
+                                                Grid.Row="0"
+                                                Text="Found" />
+                                            <Label
+                                                Grid.Column="1"
+                                                Grid.Row="0"
+                                                Text="Lost" />
+                                            <Label
+                                                Grid.Column="2"
+                                                Grid.Row="0"
+                                                Text="Net" />
+                                            <Label
+                                                Grid.Column="3"
+                                                Grid.Row="0"
+                                                Text="Net %" />
+                                            <Label
+                                                Grid.Column="4"
+                                                Grid.Row="0"
+                                                Text="Total" />
+
+                                            <Label
+                                                Grid.Column="0"
+                                                Grid.Row="1"
+                                                Text="{Binding CostSavings.Found, StringFormat='{0:F2}'}"
+                                                TextColor="Green" />
+                                            <Label
+                                                Grid.Column="1"
+                                                Grid.Row="1"
+                                                Text="{Binding CostSavings.Lost, StringFormat='{0:F2}'}"
+                                                TextColor="DarkRed" />
+                                            <Label
+                                                Grid.Column="2"
+                                                Grid.Row="1"
+                                                Text="{Binding CostSavings.Net, StringFormat='{0:F2}'}"
+                                                TextColor="Blue" />
+                                            <Label
+                                                Grid.Column="3"
+                                                Grid.Row="1"
+                                                Text="{Binding CostSavings.NetPercent, StringFormat='{0:F2} %'}"
+                                                TextColor="Blue" />
+                                            <Label
+                                                Grid.Column="4"
+                                                Grid.Row="1"
+                                                Text="{Binding CostSavings.Total, StringFormat='{0:F2}'}"
+                                                TextColor="Black" />
+
+                                        </Grid>
+                                        <Grid
+                                            BackgroundColor="DarkGray"
+                                            Grid.Row="2"
+                                            Padding="5">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <Label Grid.Column="0"
+                                                   Text="{Binding Orders.Count, StringFormat='pending: {0}'}" />
+                                            <Label Grid.Column="1"
+                                                   Text="{Binding Orders.Count, StringFormat='submitted: {0}'}" />
+                                            <Label Grid.Column="2"
+                                                   Text="{Binding Orders.Count, StringFormat='completed: {0}'}" />
+                                        </Grid>
+
+                                    </Grid>
+                                </StackLayout>
+
+                            </Border>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </RefreshView>
+</ContentPage>

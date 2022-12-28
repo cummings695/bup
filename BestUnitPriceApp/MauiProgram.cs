@@ -51,8 +51,7 @@ public static class MauiProgram
 		var selectedRestaurantTracker = new SelectedRestaurantTracker();
 		builder.Services.AddSingleton(selectedRestaurantTracker);
 		builder.Services.AddSingleton<ICurrentRestaurantService>(selectedRestaurantTracker);
-
-		
+        
         builder.Services.AddSingleton<LoginViewModel>();
         builder.Services.AddSingleton<LoginPage>();
 
@@ -78,6 +77,15 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<VendorsViewModel>();
         builder.Services.AddSingleton<VendorsPage>();
+
+        builder.Services.AddSingleton<BatchesViewModel>();
+        builder.Services.AddSingleton<BatchesPage>();
+
+        builder.Services.AddSingleton<BatchesDetailViewModel>();
+        builder.Services.AddSingleton<BatchesDetailPage>();
+
+        builder.Services.AddSingleton<OrdersDetailViewModel>();
+        builder.Services.AddSingleton<OrdersDetailPage>();
 
 		return builder.Build();
 	}

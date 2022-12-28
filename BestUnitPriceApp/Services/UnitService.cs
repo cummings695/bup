@@ -5,7 +5,6 @@ namespace BestUnitPriceApp.Services;
 
 public partial class UnitService : SecuredService, IUnitService
 {
-    private readonly ICurrentRestaurantService _currentRestaurantService;
     private readonly ICurrentUserService _currentUserService;
     private readonly HttpClient _httpClient;
 
