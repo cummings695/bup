@@ -124,7 +124,7 @@ public partial class ItemsViewModel : BaseViewModel, IObserver<Restaurant>, IDis
     }
 
     [RelayCommand]
-    private async void GoToDetails(SampleItem item)
+    private async void GoToDetails(InventoryItem item)
     {
         await Shell.Current.GoToAsync(nameof(ItemsDetailPage), true, new Dictionary<string, object>
         {

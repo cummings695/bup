@@ -10,6 +10,17 @@ namespace BestUnitPriceApp.ViewModels;
 
 public partial class ScanInvoiceViewModel : BaseViewModel
 {
+
+    public ScanInvoiceViewModel()
+    {
+        // make sure we can access the camera
+        var camera = new Microsoft.Maui.ApplicationModel.Permissions.Camera();
+        if (camera.CheckStatusAsync().Result != PermissionStatus.Granted)
+        {
+            
+        }
+    }
+
     [RelayCommand]
     public async Task ScanInvoice()
     {

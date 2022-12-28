@@ -1,8 +1,8 @@
 ﻿namespace BestUnitPriceApp.ViewModels;
 
-[QueryProperty(nameof(Item), "Item")]
+[QueryProperty(nameof(Restaurant), "Restaurant")]
 public partial class RestaurantsDetailViewModel : BaseViewModel
 {
     [ObservableProperty]
-    SampleItem item;
+    Restaurant _restaurant;
 }

@@ -13,7 +13,6 @@
         </Grid.RowDefinitions>
 
             <CollectionView Grid.Row="0"
-                  
                             ItemsSource="{Binding Batch.Orders}" 
                             SelectionMode="None">
                 <CollectionView.ItemsLayout>

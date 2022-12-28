@@ -9,10 +9,10 @@ public partial class RestaurantsViewModel : BaseViewModel
     private readonly RestaurantReporter _reporter; 
 
     [ObservableProperty]
-    bool isRefreshing;
+    bool _isRefreshing;
 
     [ObservableProperty]
-    ObservableCollection<Restaurant> items;
+    ObservableCollection<Restaurant> _items;
 
     [ObservableProperty]
     private Restaurant _selectedRestaurant;
@@ -68,11 +68,11 @@ public partial class RestaurantsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async void GoToDetails(Restaurant item)
+    private async void GoToDetails(Restaurant restaurant)
     {
         await Shell.Current.GoToAsync(nameof(RestaurantsDetailPage), true, new Dictionary<string, object>
         {
-            { "Item", item }
+            { "Restaurant", restaurant }
         });
     }
 }

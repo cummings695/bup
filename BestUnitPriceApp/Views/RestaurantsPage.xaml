@@ -13,7 +13,7 @@
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:RestaurantsViewModel}}, Path=GoToDetailsCommand}" CommandParameter="{Binding .}" />
                         </Frame.GestureRecognizers>
-                        <Label Text="{Binding Name}" FontSize="Large" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Black}}" />
+                        <Label Text="{Binding Name}" FontSize="Medium" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Black}}" />
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
