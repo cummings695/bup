@@ -1,9 +1,9 @@
-using BestUnitPrice.Application.Common.Models;
 using BestUnitPriceApp.Models;
+using LanguageExt.Common;
 
 namespace BestUnitPriceApp.Services;
 
 public interface IZoneService
 {
-    public Task<(Result Result, List<Zone> Zones)> GetAsync();
+    public Task<Result<List<Zone>>> GetAsync();
 }

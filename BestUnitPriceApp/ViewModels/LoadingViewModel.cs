@@ -60,6 +60,7 @@ public partial class LoadingViewModel : BaseViewModel
         }
         else
         {
+            
             await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
         }
     }
@@ -73,7 +74,7 @@ public partial class LoadingViewModel : BaseViewModel
             return false;
         }
 
-        _currentUserService.Clear();
+        //_currentUserService.Clear();
 
         // determine if we are logged in.
         var user = _currentUserService.Get();
@@ -86,12 +87,9 @@ public partial class LoadingViewModel : BaseViewModel
 
         var response = await _authenticationService.RefreshAsync(user.Token, user.RefreshToken);
 
-        if (!response.Result.Succeeded)
-        {
-            return false;
-        }
-
-        return true;
+        return response.Match(
+            b => { return true; },
+            e => { return false; });
     }
 
     public void DisplayRestaurantPicker(View views)

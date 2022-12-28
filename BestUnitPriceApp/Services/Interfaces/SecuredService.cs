@@ -1,5 +1,4 @@
 using System.Net.Http.Headers;
-using BestUnitPrice.Application.Common.Exceptions;
 using BestUnitPriceApp.Models;
 
 namespace BestUnitPriceApp.Services;

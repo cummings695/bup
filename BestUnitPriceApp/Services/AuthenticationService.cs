@@ -1,6 +1,7 @@
-using BestUnitPrice.Application.Common.Models;
+using BestUnitPriceApp.Common;
 using System.Net.Http.Json;
 using System.Text;
+using LanguageExt.Common;
 
 namespace BestUnitPriceApp.Services;
 
@@ -42,7 +43,7 @@ public class AuthenticationService : IAuthenticationService
         //throw new ApplicationException(response.ReasonPhrase);
     }
 
-    public async Task<(Result Result, AuthorizationTicket Ticket)> RefreshAsync(string accessToken, string refreshToken)
+    public async Task<Result<AuthorizationTicket>> RefreshAsync(string accessToken, string refreshToken)
     {
         Uri uri = new Uri(string.Format(Constants.RestUrl, "api/token/refresh"));
 
@@ -50,20 +51,15 @@ public class AuthenticationService : IAuthenticationService
         request.Content = new StringContent(
             JsonSerializer.Serialize(
                 new { AccessToken = accessToken, RefreshToken = refreshToken }), Encoding.UTF8, "application/json");
-
-        try
-        {
+        
             var response = await _httpClient.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
-                return (response.ToApplicationResult(), null);
+            {
+                return new Result<AuthorizationTicket>(new HttpRequestException(response.ReasonPhrase));
+            }
 
-            return (Result.Success(), await response.Content.ReadFromJsonAsync<AuthorizationTicket>());
-        }
-        catch (Exception e)
-        {
-            return (Result.Failure(new[] { e.Message }), null);
-        }
+            return await response.Content.ReadFromJsonAsync<AuthorizationTicket>();
     }
 
     public async Task<string> GetAuthToken()

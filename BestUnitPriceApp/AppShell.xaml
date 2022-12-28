@@ -7,13 +7,13 @@
     xmlns:local="clr-namespace:BestUnitPriceApp"
     xmlns:ctl="clr-namespace:BestUnitPriceApp.Pages.Controls">
 
-    <ShellContent
+    <!--<ShellContent
         Shell.NavBarIsVisible="true"
         FlyoutItemIsVisible="False"
         Title="Loading"
         Icon="iconblank.png"
         ContentTemplate="{DataTemplate views:LoadingPage}"
-        Route="LoadingPage" />
+        Route="LoadingPage" />-->
 
     <ShellContent
         Shell.NavBarIsVisible="false"

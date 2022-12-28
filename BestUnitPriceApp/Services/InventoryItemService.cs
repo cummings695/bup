@@ -1,3 +1,4 @@
+using BestUnitPriceApp.Models;
 using System.Net.Http.Json;
 
 namespace BestUnitPriceApp.Services;
@@ -16,7 +17,7 @@ internal class InventoryItemService : BaseEntityService<InventoryItem>, IInvento
         _currentUserService = currentUserService;
     }
 
-    public async Task<List<InventoryItem>> GetByZoneAsync(long zoneId, int? page, int? pageSize)
+    public async Task<PagedList<InventoryItem>> GetByZoneAsync(long zoneId, int? page, int? pageSize)
     {
         var url = $"api/inventoryitems?zoneid={zoneId}";
         if (page.HasValue && pageSize.HasValue)
@@ -29,7 +30,7 @@ internal class InventoryItemService : BaseEntityService<InventoryItem>, IInvento
         {
             using var request = this.GetHttpRequestMessage(_currentUserService.Get(), HttpMethod.Get, uri);
 
-            var response = _httpClient.SendAsync(request).Result;
+            var response = await _httpClient.SendAsync(request);
 
             if (response.IsSuccessStatusCode)
             {
@@ -39,7 +40,7 @@ internal class InventoryItemService : BaseEntityService<InventoryItem>, IInvento
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                 };
                 
-                var result = await response.Content.ReadFromJsonAsync<List<InventoryItem>>(options);
+                var result = await response.Content.ReadFromJsonAsync<PagedList<InventoryItem>>(options);
                 return result;
             }
         }

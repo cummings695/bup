@@ -1,4 +1,4 @@
-using BestUnitPrice.Application.Common.Models;
+using LanguageExt.Common;
 
 namespace BestUnitPriceApp.Services;
 
@@ -8,5 +8,5 @@ public interface IAuthenticationService
 
     Task<AuthorizationTicket> LoginAsync(string email, string password);
 
-    Task<(Result Result, AuthorizationTicket Ticket)> RefreshAsync(string accessToken, string refreshToken);
+    Task<Result<AuthorizationTicket>> RefreshAsync(string accessToken, string refreshToken);
 }

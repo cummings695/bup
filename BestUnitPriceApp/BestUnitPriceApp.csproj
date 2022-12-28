@@ -48,14 +48,9 @@
 	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Maui" Version="3.1.0" />
 	  <PackageReference Include="CommunityToolkit.MVVM" Version="8.0.0" />
+	  <PackageReference Include="LanguageExt.Core" Version="4.4.0" />
 	  <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="7.0.1" />
 	  <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.1" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Reference Include="Application">
-	    <HintPath>..\Assemblies\Application.dll</HintPath>
-	  </Reference>
 	</ItemGroup>
 
 	<ItemGroup>

@@ -2,25 +2,24 @@
 
 public partial class LoginViewModel : BaseViewModel
 {
-    private readonly ICurrentUserService _currentUserService;
-    private readonly IAuthenticationService _authenticationService;
-    private readonly IRestaurantService _restaurantService;
-    //private readonly ICurrentRestaurantService _currentRestaurantService;
-    private readonly SelectedRestaurantTracker _selectedRestaurantTracker;
+    readonly ICurrentUserService _currentUserService;
+    readonly IAuthenticationService _authenticationService;
+    readonly IRestaurantService _restaurantService;
+    readonly IConnectivity _connectivity;
+    readonly SelectedRestaurantTracker _selectedRestaurantTracker;
 
     public LoginViewModel(
         ICurrentUserService currentUserService,
         IAuthenticationService authenticationService,
-        //ICurrentRestaurantService currentRestaurantService,
+        IConnectivity connectivity,
         SelectedRestaurantTracker selectedRestaurantTracker,
         IRestaurantService restaurantService)
     {
         _currentUserService = currentUserService;
         _authenticationService = authenticationService;
         _restaurantService = restaurantService;
-        //_currentRestaurantService = currentRestaurantService;
         _selectedRestaurantTracker = selectedRestaurantTracker;
-
+        _connectivity = connectivity;
         Title = "Login";
     }
 
@@ -36,6 +35,12 @@ public partial class LoginViewModel : BaseViewModel
     [RelayCommand]
     async Task ValidateLogin()
     {
+        if (_connectivity.NetworkAccess != NetworkAccess.Internet)
+        {
+            await Shell.Current.DisplayAlert("No connectivity!", $"Please check internet and try again.", "OK");
+            return;
+        }
+        
         ErrorMessage = string.Empty;
         AuthorizationTicket ticket = null;
         try
@@ -47,9 +52,6 @@ public partial class LoginViewModel : BaseViewModel
                 var user = _currentUserService.Set(ticket);
                 if (user.SelectedRestaurantId.HasValue)
                     _selectedRestaurantTracker.TrackRestaurant(await _restaurantService.GetAsync(user.SelectedRestaurantId.Value));
-                //_currentRestaurantService.Restaurant = rest.Result;
-                //user.SelectedRestaurant = _restaurantService.GetAsync(restId);
-                //user?.Restaurants?.FirstOrDefault()?.Id;
 
                 await Shell.Current.GoToAsync($"//{nameof(ItemsPage)}");
             }

@@ -1,4 +1,6 @@
-﻿namespace BestUnitPriceApp.ViewModels;
+﻿using System.Reflection.PortableExecutable;
+
+namespace BestUnitPriceApp.ViewModels;
 
 public partial class ItemsViewModel : BaseViewModel, IObserver<Restaurant>, IDisposable
 {
@@ -41,9 +43,10 @@ public partial class ItemsViewModel : BaseViewModel, IObserver<Restaurant>, IDis
     private async void OnRefreshing()
     {
         IsRefreshing = true;
-
+        _page = 1;
         try
         {
+            await LoadZonesAsync();
             await LoadDataAsync();
         }
         finally
@@ -62,9 +65,9 @@ public partial class ItemsViewModel : BaseViewModel, IObserver<Restaurant>, IDis
         }
 
         _page += 1;
-        var items = await _inventoryItemService.GetByZoneAsync(this._selectedZone.Id, _page, _pageSize);
+        var result = await _inventoryItemService.GetByZoneAsync(this._selectedZone.Id, _page, _pageSize);
 
-        foreach (var item in items)
+        foreach (var item in result.Items)
         {
             Items.Add(item);
         }
@@ -78,8 +81,8 @@ public partial class ItemsViewModel : BaseViewModel, IObserver<Restaurant>, IDis
             return;
         }
 
-        Items = new ObservableCollection<InventoryItem>(
-            await _inventoryItemService.GetByZoneAsync(this._selectedZone.Id, _page, _pageSize));
+        var result = await _inventoryItemService.GetByZoneAsync(this._selectedZone.Id, _page, _pageSize);
+        Items = new ObservableCollection<InventoryItem>(result.Items);
     }
 
     public async Task LoadZonesAsync()
@@ -98,7 +101,10 @@ public partial class ItemsViewModel : BaseViewModel, IObserver<Restaurant>, IDis
 
             IsBusy = true;
             var result = await _zoneService.GetAsync();
-            Zones = new ObservableCollection<Zone>(result.Zones.OrderBy(z => z.SortOrder));
+            Zones = result.Match(
+                z => { return new ObservableCollection<Zone>(z.OrderBy(z => z.SortOrder)); },
+                e => { return new ObservableCollection<Zone>(); });
+            //Zones = new ObservableCollection<Zone>(result.Zones.OrderBy(z => z.SortOrder));
             Zones.Add(new Zone { Id = -1, Name = "NO ZONE" });
             if (Zones.Any())
                 this.SelectedZone = Zones.First();

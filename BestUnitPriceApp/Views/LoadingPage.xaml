@@ -6,6 +6,6 @@
              x:Class="BestUnitPriceApp.Views.LoadingPage"
              x:DataType="vm:LoadingViewModel">
 
-    <ctl:LogoView Size="50"></ctl:LogoView>
+    <!--<ctl:LogoView Size="50"></ctl:LogoView>-->
     
 </ContentPage>
