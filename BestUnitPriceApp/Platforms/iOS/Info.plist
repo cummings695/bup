@@ -32,5 +32,9 @@
 	<string>com.bestunitprice.BestUnitPriceApp</string>
 	<key>CFBundleDisplayName</key>
 	<string>BestUnitPrice</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Need to access your camera for Scans</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Need to access you Library for Invoice Scans</string>
 </dict>
 </plist>

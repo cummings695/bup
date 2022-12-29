@@ -75,4 +75,13 @@ public partial class RestaurantsViewModel : BaseViewModel
             { "Restaurant", restaurant }
         });
     }
+    
+    [RelayCommand]
+    public async Task SelectRestaurant(Restaurant restaurant)
+    {
+        if (_currentRestaurantService.CurrentRestaurant.Id != restaurant.Id)
+        {
+            _selectedRestaurantTracker.TrackRestaurant(restaurant);
+        }
+    }
 }

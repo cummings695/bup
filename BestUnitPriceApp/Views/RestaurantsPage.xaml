@@ -9,12 +9,22 @@
         <CollectionView ItemsSource="{Binding Items}" RemainingItemsThreshold="10" RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="m:Restaurant">
-                    <Frame Margin="4" Padding="12">
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:RestaurantsViewModel}}, Path=GoToDetailsCommand}" CommandParameter="{Binding .}" />
-                        </Frame.GestureRecognizers>
-                        <Label Text="{Binding Name}" FontSize="Medium" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Black}}" />
-                    </Frame>
+                    <SwipeView>
+                        <SwipeView.LeftItems>
+                            <SwipeItems>
+                                <SwipeItem Text="Select"
+                                           Command="{Binding Source={RelativeSource AncestorType={x:Type vm:RestaurantsViewModel}}, Path=SelectRestaurantCommand}"
+                                           CommandParameter="{Binding .}">
+                                </SwipeItem>
+                            </SwipeItems>
+                        </SwipeView.LeftItems>
+                        <Frame Margin="4" Padding="12">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:RestaurantsViewModel}}, Path=GoToDetailsCommand}" CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
+                            <Label Text="{Binding Name}" FontSize="Medium" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Black}}" />
+                        </Frame>
+                    </SwipeView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
