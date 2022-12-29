@@ -46,7 +46,8 @@ public static class MauiProgram
 		builder.Services.AddTransient<IOrderService, OrderService>();
 		builder.Services.AddTransient<IZoneService, ZoneService>();
 		builder.Services.AddTransient<IInventoryItemService, InventoryItemService>();
-		builder.Services.AddTransient<IUnitService, UnitService>();
+        builder.Services.AddTransient<IUnitService, UnitService>();
+        builder.Services.AddTransient<IVendorService, VendorService>();
 
 		var selectedRestaurantTracker = new SelectedRestaurantTracker();
 		builder.Services.AddSingleton(selectedRestaurantTracker);

@@ -152,8 +152,8 @@ public partial class ItemsViewModel : BaseViewModel, IObserver<Restaurant>, IDis
     {
         //Title = value.Name;
         // reload the listing based upon the new restaurant.
-        //LoadZonesAsync().Wait();
-        LoadDataAsync().Wait();
+        LoadZonesAsync().Wait();
+        //LoadDataAsync().Wait();
         // throw new NotImplementedException();
     }
 }

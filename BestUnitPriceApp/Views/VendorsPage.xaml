@@ -6,14 +6,14 @@
              x:Class="BestUnitPriceApp.Views.VendorsPage"
              x:DataType="vm:VendorsViewModel">
     <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshingCommand}">
-        <CollectionView ItemsSource="{Binding Items}" RemainingItemsThreshold="10" RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}">
+        <CollectionView ItemsSource="{Binding Vendors}" RemainingItemsThreshold="10" RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}">
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="m:SampleItem">
+                <DataTemplate x:DataType="m:Vendor">
                     <Frame Margin="4" Padding="12">
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:VendorsViewModel}}, Path=GoToDetailsCommand}" CommandParameter="{Binding .}" />
                         </Frame.GestureRecognizers>
-                        <Label Text="{Binding Title}" FontSize="Large" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Black}}" />
+                        <Label Text="{Binding DisplayName}" FontSize="Medium" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Black}}" />
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

@@ -6,8 +6,8 @@
              x:DataType="vm:VendorsDetailViewModel">
     <ScrollView>
         <VerticalStackLayout Margin="12">
-            <Label Text="{Binding Item.Title}" FontSize="Header" />
-            <Label Text="{Binding Item.Description}" FontSize="Default" />
+            <Label Text="{Binding Vendor.DisplayName}" FontSize="Header" />
+            <Label Text="{Binding Vendor.AccountNumber}" FontSize="Default" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

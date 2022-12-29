@@ -19,7 +19,7 @@
                     <VerticalStackLayout Margin="5">
                         <Label Margin="20"
                                HorizontalTextAlignment="Center"
-                               FontSize="Large"
+                               FontSize="Medium"
                                Text="No Items Found" />
                     </VerticalStackLayout>
                 </CollectionView.EmptyView>
@@ -31,7 +31,7 @@
                                 <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ItemsViewModel}}, Path=GoToDetailsCommand}" CommandParameter="{Binding .}" />
                             </Frame.GestureRecognizers>
                             <Label
-                                FontSize="Large"
+                                FontSize="Medium"
                                 Text="{Binding Product.Name}"
                                 TextColor="{AppThemeBinding Light={StaticResource Primary},
                                                             Dark={StaticResource Black}}" />

@@ -1,8 +1,8 @@
 ﻿namespace BestUnitPriceApp.ViewModels;
 
-[QueryProperty(nameof(Item), "Item")]
+[QueryProperty(nameof(Vendor), "Vendor")]
 public partial class VendorsDetailViewModel : BaseViewModel
 {
     [ObservableProperty]
-    SampleItem item;
+    Vendor _vendor;
 }
