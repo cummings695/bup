@@ -14,13 +14,14 @@
                 ItemsSource="{Binding Items}"
                 RemainingItemsThreshold="10"
                 RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}">
-                
+
                 <CollectionView.EmptyView>
                     <VerticalStackLayout Margin="5">
-                        <Label Margin="20"
-                               HorizontalTextAlignment="Center"
-                               FontSize="Medium"
-                               Text="No Items Found" />
+                        <Label
+                            Margin="20"
+                            FontSize="Medium"
+                            HorizontalTextAlignment="Center"
+                            Text="No Items Found" />
                     </VerticalStackLayout>
                 </CollectionView.EmptyView>
 
@@ -43,10 +44,10 @@
             <Picker
                 Title="Select Zone"
                 Grid.Row="1"
-                ItemDisplayBinding="{Binding Name}"
-                ItemsSource="{Binding Zones}"
-                HorizontalTextAlignment="Center"
                 FontSize="Large"
+                HorizontalTextAlignment="Center"
+                ItemDisplayBinding="{Binding SelectedZone.Name}"
+                ItemsSource="{Binding Zones}"
                 SelectedIndexChanged="Picker_OnSelectedIndexChanged"
                 SelectedItem="{Binding SelectedZone}" />
         </Grid>

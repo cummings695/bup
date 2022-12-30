@@ -1,23 +1,24 @@
 ﻿namespace BestUnitPriceApp.ViewModels;
 
-public partial class VendorsViewModel : BaseViewModel
+public partial class UnitsViewModel : BaseViewModel
 {
     private int _page = 1;
     private int _pageSize = 30;
     
     readonly IConnectivity _connectivity;
-    private readonly IVendorService _vendorService;
+    private readonly IUnitService _unitService;
 
     [ObservableProperty] bool _isRefreshing;
 
-    [ObservableProperty] ObservableCollection<Vendor> _vendors;
+    [ObservableProperty] ObservableCollection<Unit> _units;
 
-    public VendorsViewModel(
-        IVendorService vendorService,
+    public UnitsViewModel(
+        SampleDataService service,
+        IUnitService unitService,
         IConnectivity connectivity
     )
     {
-        _vendorService = vendorService;
+        _unitService = unitService;
         _connectivity = connectivity;
     }
 
@@ -44,21 +45,22 @@ public partial class VendorsViewModel : BaseViewModel
         if (IsBusy)
             return;
 
-        IsBusy = true;
+        IsRefreshing = IsBusy = true;
 
         _page += 1;
-        var results = await _vendorService.GetAsync(_page, _pageSize);
+        var results = await _unitService.GetAsync(_page, _pageSize);
 
-        var vendors = results.Match(
-            vendors => { return vendors.Items; },
-            exception => { return new List<Vendor>(); });
+        var units = results.Match(
+            result => result.Items,
+            exception => new List<Unit>());
 
-        foreach (var item in vendors)
+        foreach (var item in units)
         {
-            Vendors.Add(item);
+            Units.Add(item);
         }
 
-        IsBusy = false;
+        ;
+        IsRefreshing = IsBusy = false;
     }
 
     public async Task LoadDataAsync()
@@ -72,25 +74,23 @@ public partial class VendorsViewModel : BaseViewModel
         if (IsBusy)
             return;
 
-        IsBusy = true;
-
         _page = 1;
 
-        var results = await _vendorService.GetAsync(_page, _pageSize);
+        var results = await _unitService.GetAsync(_page, _pageSize);
 
-        var vendors = results.Match(
-            vendors => vendors.Items,
-            exception => { return new List<Vendor>(); });
+        var units = results.Match(
+            result => result.Items,
+            exception => new List<Unit>());
 
-        Vendors = new ObservableCollection<Vendor>(vendors);
+        Units = new ObservableCollection<Unit>(units);
 
         IsBusy = false;
     }
 
     [RelayCommand]
-    private async void GoToDetails(Vendor vendor)
+    private async void GoToDetails(Unit unit)
     {
-        await Shell.Current.GoToAsync(nameof(VendorsDetailPage), true,
-            new Dictionary<string, object> { { "Vendor", vendor } });
+        //await Shell.Current.GoToAsync(nameof(UnitsDetailPage), true,
+        //    new Dictionary<string, object> { { "Unit", unit } });
     }
 }

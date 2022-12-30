@@ -1,13 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:BestUnitPriceApp.ViewModels"
-             x:Class="BestUnitPriceApp.Views.VendorsDetailPage"
-             x:DataType="vm:VendorsDetailViewModel">
+<ContentPage
+    x:Class="BestUnitPriceApp.Views.VendorsDetailPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:BestUnitPriceApp.ViewModels"
+    x:DataType="vm:VendorsDetailViewModel">
     <ScrollView>
         <VerticalStackLayout Margin="12">
-            <Label Text="{Binding Vendor.DisplayName}" FontSize="Header" />
-            <Label Text="{Binding Vendor.AccountNumber}" FontSize="Default" />
+            <Label FontSize="Header" Text="{Binding Vendor.DisplayName}" />
+            <Label FontSize="Default" Text="{Binding Vendor.AccountNumber}" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

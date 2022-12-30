@@ -18,16 +18,21 @@ public partial class UnitService : SecuredService, IUnitService
     }
 
 
-    public async Task<Result<List<Unit>>> GetAsync()
+    public async Task<Result<PagedList<Unit>>> GetAsync(int? page, int? pageSize)
     {
-        Uri uri = new Uri(string.Format(Constants.RestUrl, $"api/units"));
+        var url = string.Format(Constants.RestUrl, "api/units?");
+        if (page.HasValue && pageSize.HasValue)
+        {
+            url += $"page={page}&pageSize={pageSize}";
+        }
 
+        Uri uri = new Uri(url);
         using var request = this.GetHttpRequestMessage(_currentUserService.Get(), HttpMethod.Get, uri);
 
         var response = _httpClient.SendAsync(request).Result;
 
         if (!response.IsSuccessStatusCode)
-            return new Result<List<Unit>>(new HttpRequestException(response.ReasonPhrase));
+            return new Result<PagedList<Unit>>(new HttpRequestException(response.ReasonPhrase));
 
         var content = await response.Content.ReadAsStringAsync();
         var options = new JsonSerializerOptions
@@ -35,8 +40,6 @@ public partial class UnitService : SecuredService, IUnitService
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
 
-        var result = await response.Content.ReadFromJsonAsync<PagedList<Unit>>(options);
-
-        return result.Items;
+        return await response.Content.ReadFromJsonAsync<PagedList<Unit>>(options);
     }
 }

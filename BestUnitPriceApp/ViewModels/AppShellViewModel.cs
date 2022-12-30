@@ -48,7 +48,7 @@ public partial class AppShellViewModel : ObservableObject
         RestaurantsReleased = true;
         SystemReleased = true;
         SystemVendorsReleased = true;
-        SystemUnitsReleased = false;
+        SystemUnitsReleased = true;
         SystemZonesReleased = true;
     }
 

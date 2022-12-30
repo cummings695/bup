@@ -7,4 +7,9 @@ public partial class ItemsDetailPage : ContentPage
         InitializeComponent();
         BindingContext = viewModel;
     }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+    }
 }

@@ -10,6 +10,9 @@
     xmlns:vm="clr-namespace:BestUnitPriceApp.ViewModels"
     x:DataType="vm:AppShellViewModel">
 
+    <Shell.TitleView>
+        <controls:AppTitleView />
+    </Shell.TitleView>
     <ShellContent
         Title="Loading"
         ContentTemplate="{DataTemplate views:LoadingPage}"
@@ -105,27 +108,24 @@
             <ShellContent ContentTemplate="{DataTemplate views:VendorsPage}" Route="VendorsPage" />
         </Tab>
         <Tab
-            Title="Units"
-            Icon="{FontImage FontFamily=FontAwesome,
-                             Glyph={x:Static util:FontAwesomeHelper.TableCells}}"
-            IsVisible="{Binding SystemUnitsReleased}">
-            <ShellContent ContentTemplate="{DataTemplate views:BlankPage}" Route="UnitsPage" />
-        </Tab>
-        <Tab
             Title="Zones"
             Icon="{FontImage FontFamily=FontAwesome,
                              Glyph={x:Static util:FontAwesomeHelper.Wrench}}"
             IsVisible="{Binding SystemZonesReleased}">
-            <ShellContent ContentTemplate="{DataTemplate views:BlankPage}" Route="ZonesPage" />
+            <ShellContent ContentTemplate="{DataTemplate views:ZonesPage}" Route="ZonesPage" />
+        </Tab>
+        <Tab
+            Title="Units"
+            Icon="{FontImage FontFamily=FontAwesome,
+                             Glyph={x:Static util:FontAwesomeHelper.TableCells}}"
+            IsVisible="{Binding SystemUnitsReleased}">
+            <ShellContent ContentTemplate="{DataTemplate views:UnitsPage}" Route="UnitsPage" />
         </Tab>
     </FlyoutItem>
 
     <Shell.FlyoutFooter>
         <StackLayout Padding="20">
-            <Button
-                Command="{Binding SignOutCommand}"
-
-                Text="Sign Out" />
+            <Button Command="{Binding SignOutCommand}" Text="Sign Out" />
         </StackLayout>
     </Shell.FlyoutFooter>
 

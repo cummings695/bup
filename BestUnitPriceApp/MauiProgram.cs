@@ -1,4 +1,5 @@
 ﻿using BestUnitPriceApp.Views;
+using BestUnitPriceApp.Views.Controls;
 
 namespace BestUnitPriceApp;
 
@@ -86,6 +87,16 @@ public static class MauiProgram
 		builder.Services.AddSingleton<OrdersDetailViewModel>();
 		builder.Services.AddSingleton<OrdersDetailPage>();
 
-		return builder.Build();
+        builder.Services.AddSingleton<ZonesViewModel>();
+        builder.Services.AddSingleton<ZonesPage>();
+
+        builder.Services.AddSingleton<UnitsViewModel>();
+        builder.Services.AddSingleton<UnitsPage>();
+
+        builder.Services.AddSingleton<AppTitleViewModel>();
+        builder.Services.AddSingleton<AppTitleView>();
+
+
+        return builder.Build();
 	}
 }

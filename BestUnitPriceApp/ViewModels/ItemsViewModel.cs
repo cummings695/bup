@@ -4,12 +4,11 @@ using System.Reflection.PortableExecutable;
 
 namespace BestUnitPriceApp.ViewModels;
 
-public partial class ItemsViewModel : BaseViewModel, IObserver<Restaurant>, IDisposable
+public partial class ItemsViewModel : BaseViewModel
 {
     private int _page = 1;
     private int _pageSize = 50;
-
-    readonly SampleDataService dataService;
+    
     readonly IConnectivity _connectivity;
     readonly IInventoryItemService _inventoryItemService;
     readonly IZoneService _zoneService;
@@ -21,7 +20,6 @@ public partial class ItemsViewModel : BaseViewModel, IObserver<Restaurant>, IDis
     [ObservableProperty] ObservableCollection<InventoryItem> _items;
     [ObservableProperty] ObservableCollection<Zone> _zones;
     
-    private IDisposable _unsubscriber;
 
     public ItemsViewModel(SampleDataService service,
         ICurrentUserService currentUserService,
@@ -29,7 +27,6 @@ public partial class ItemsViewModel : BaseViewModel, IObserver<Restaurant>, IDis
         IInventoryItemService inventoryItemService,
         IConnectivity connectivity)
     {
-        dataService = service;
         _zoneService = zoneService;
         _inventoryItemService = inventoryItemService;
         _connectivity = connectivity;
@@ -38,6 +35,7 @@ public partial class ItemsViewModel : BaseViewModel, IObserver<Restaurant>, IDis
 
         WeakReferenceMessenger.Default.Register<SelectedRestaurantChangedMessage>(this, (rec, m) =>
         {
+            this.Title = $"{m.Value.Name} Items";
             OnRefreshing();
         });
     }
@@ -131,32 +129,7 @@ public partial class ItemsViewModel : BaseViewModel, IObserver<Restaurant>, IDis
     {
         await Shell.Current.GoToAsync(nameof(ItemsDetailPage), true, new Dictionary<string, object>
         {
-            { "Item", item }
+            { "InventoryItem", item }
         });
-    }
-
-    public void Dispose()
-    {
-        _unsubscriber.Dispose();
-    }
-
-    public void OnCompleted()
-    {
-        Console.WriteLine("The Restaurant Tracker has completed transmitting data to {0}.", nameof(ItemsViewModel));
-        _unsubscriber.Dispose();
-    }
-
-    public void OnError(Exception error)
-    {
-        //throw new NotImplementedException();
-    }
-
-    public void OnNext(Restaurant value)
-    {
-        //Title = value.Name;
-        // reload the listing based upon the new restaurant.
-        LoadZonesAsync().Wait();
-        //LoadDataAsync().Wait();
-        // throw new NotImplementedException();
     }
 }

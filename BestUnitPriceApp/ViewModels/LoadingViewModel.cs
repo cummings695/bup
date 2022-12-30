@@ -91,7 +91,7 @@ public partial class LoadingViewModel : BaseViewModel
             return false;
         }
 
-        _currentUserService.Clear();
+        //_currentUserService.Clear();
 
         // determine if we are logged in.
         var user = _currentUserService.Get();

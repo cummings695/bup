@@ -13,7 +13,7 @@
                     <Label
                         FontSize="23"
                         HorizontalTextAlignment="Center"
-                        Text="{Binding Item.Product.Name}" />
+                        Text="{Binding InventoryItem.Product.Name}" />
                     <Grid
                         Margin="10"
                         ColumnDefinitions="*,80"
@@ -21,23 +21,23 @@
                         <Label
                             Grid.Row="0"
                             Grid.Column="0"
-                            Text="{Binding Item.Zone.Name, StringFormat='ZONE: {0}'}" />
+                            Text="{Binding InventoryItem.Zone.Name, StringFormat='ZONE: {0}'}" />
                         <Label
                             Grid.Row="0"
                             Grid.Column="1"
-                            Text="{Binding Item.ShelvingLocation, StringFormat='SHELF: {0}'}" />
+                            Text="{Binding InventoryItem.ShelvingLocation, StringFormat='SHELF: {0}'}" />
                         <Entry
-                            Grid.Row="1"
+                            Grid.Row="2"
                             Grid.ColumnSpan="4"
                             HeightRequest="60"
                             Placeholder="Notes"
-                            Text="{Binding Item.Product.Notes}" />
+                            Text="{Binding InventoryItem.Product.Notes}" />
                     </Grid>
                 </StackLayout>
 
             </Border>
             <Border Grid.Row="1">
-                <CollectionView ItemsSource="{Binding Item.Product.Prices}" SelectionMode="None">
+                <CollectionView ItemsSource="{Binding InventoryItem.Product.Prices}" SelectionMode="None">
                     <CollectionView.EmptyView>
                         <Label Text="No Vendors Assigned" />
                     </CollectionView.EmptyView>
@@ -57,7 +57,7 @@
                                         Grid.Column="1"
                                         Margin="5"
                                         Padding="15,5,15,5"
-                                        BackgroundColor="{StaticResource Gray100}"
+                                        BackgroundColor="{StaticResource Yellow200Accent}"
                                         Stroke="{StaticResource Yellow100Accent}"
                                         StrokeShape="RoundRectangle 20,20,20,20"
                                         StrokeThickness="1">

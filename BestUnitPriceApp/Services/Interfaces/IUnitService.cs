@@ -5,5 +5,5 @@ namespace BestUnitPriceApp.Services;
 
 public interface IUnitService
 {
-    public Task<Result<List<Unit>>> GetAsync();
+    public Task<Result<PagedList<Unit>>> GetAsync(int? page, int? pageSize);
 }

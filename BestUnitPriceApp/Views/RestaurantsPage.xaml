@@ -1,33 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:BestUnitPriceApp.ViewModels"
-             xmlns:m="clr-namespace:BestUnitPriceApp.Models"
-             x:Class="BestUnitPriceApp.Views.RestaurantsPage"
-             x:DataType="vm:RestaurantsViewModel">
-    <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshingCommand}">
-        <CollectionView ItemsSource="{Binding Items}" RemainingItemsThreshold="10" RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}">
+<ContentPage
+    x:Class="BestUnitPriceApp.Views.RestaurantsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:m="clr-namespace:BestUnitPriceApp.Models"
+    xmlns:vm="clr-namespace:BestUnitPriceApp.ViewModels"
+    x:DataType="vm:RestaurantsViewModel">
+    <RefreshView Command="{Binding RefreshingCommand}" IsRefreshing="{Binding IsRefreshing}">
+        <CollectionView
+            ItemsSource="{Binding Items}"
+            RemainingItemsThreshold="10"
+            RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="m:Restaurant">
                     <SwipeView>
                         <SwipeView.LeftItems>
-                            <SwipeItems>
-                                <SwipeItem Text="Select"
-                                           Command="{Binding Source={RelativeSource AncestorType={x:Type vm:RestaurantsViewModel}}, Path=SelectRestaurantCommand}"
-                                           CommandParameter="{Binding .}">
-                                </SwipeItem>
+                            <SwipeItems Mode="Execute">
+                                <SwipeItem
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:RestaurantsViewModel}}, Path=SelectRestaurantCommand}"
+                                    CommandParameter="{Binding .}"
+                                    Text="Select" />
                             </SwipeItems>
                         </SwipeView.LeftItems>
                         <Frame Margin="4" Padding="12">
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:RestaurantsViewModel}}, Path=GoToDetailsCommand}" CommandParameter="{Binding .}" />
                             </Frame.GestureRecognizers>
-                            <Label 
-                                Text="{Binding Name}" 
-                                FontSize="Medium" 
-                                TextColor="{AppThemeBinding 
-                                    Light={StaticResource Primary}, 
-                                    Dark={StaticResource PrimaryDark}}" />
+                            <Label
+                                FontSize="Medium"
+                                Text="{Binding Name}"
+                                TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                            Dark={StaticResource PrimaryDark}}" />
                         </Frame>
                     </SwipeView>
                 </DataTemplate>
