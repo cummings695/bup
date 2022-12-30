@@ -3,63 +3,136 @@
     x:Class="BestUnitPriceApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:views="clr-namespace:BestUnitPriceApp.Views"
+    xmlns:controls="clr-namespace:BestUnitPriceApp.Views.Controls"
     xmlns:local="clr-namespace:BestUnitPriceApp"
-    xmlns:controls="clr-namespace:BestUnitPriceApp.Views.Controls">
+    xmlns:util="clr-namespace:BestUnitPriceApp.Utilities"
+    xmlns:views="clr-namespace:BestUnitPriceApp.Views"
+    xmlns:vm="clr-namespace:BestUnitPriceApp.ViewModels"
+    x:DataType="vm:AppShellViewModel">
 
     <ShellContent
-        Shell.NavBarIsVisible="true"
-        FlyoutItemIsVisible="False"
         Title="Loading"
-        Icon="iconblank.png"
         ContentTemplate="{DataTemplate views:LoadingPage}"
-        Route="LoadingPage" />
-
-    
-    <ShellContent
-        Shell.NavBarIsVisible="false"
         FlyoutItemIsVisible="False"
-        Title="Login"
         Icon="iconblank.png"
-        ContentTemplate="{DataTemplate views:LoginPage}"
-        Route="LoginPage" />
+        Route="LoadingPage"
+        Shell.NavBarIsVisible="true" />
+
 
     <ShellContent
-        Shell.NavBarIsVisible="true"
-        Title="Items"
-        Icon="iconlistdetail.png"
-        ContentTemplate="{DataTemplate views:ItemsPage}"
-        Route="ItemsPage" />
-  
-    <ShellContent
-        Shell.NavBarIsVisible="true"
-        Shell.NavBarHasShadow="True"
-        Title="Order History"
-        Icon="iconlistdetail.png"
-        ContentTemplate="{DataTemplate views:BatchesPage}"
-        Route="BatchesPage" />
-    
-    <ShellContent
-        Shell.NavBarIsVisible="true"
-        Title="Restaurants"
-        Icon="iconlistdetail.png"
-        ContentTemplate="{DataTemplate views:RestaurantsPage}"
-        Route="RestaurantsPage" />
-    
-    <ShellContent
-        Shell.NavBarIsVisible="true"
-        Title="Vendors"
-        Icon="iconlistdetail.png"
-        ContentTemplate="{DataTemplate views:VendorsPage}"
-        Route="VendorsPage" />
+        Title="Login"
+        ContentTemplate="{DataTemplate views:LoginPage}"
+        FlyoutItemIsVisible="False"
+        Icon="iconblank.png"
+        Route="LoginPage"
+        Shell.NavBarIsVisible="false" />
+
+    <FlyoutItem Title="Items" IsVisible="{Binding ItemsReleased}">
+        <FlyoutItem.Icon>
+            <FontImageSource
+                FontFamily="FontAwesome"
+                Glyph="{x:Static util:FontAwesomeHelper.ListUl}"
+                Color="{AppThemeBinding Light={StaticResource Black},
+                                        Dark={StaticResource White}}" />
+        </FlyoutItem.Icon>
+        <ShellContent
+            Title="Items"
+            ContentTemplate="{DataTemplate views:ItemsPage}"
+            Route="ItemsPage"
+            Shell.NavBarIsVisible="true" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Order Guide" IsVisible="{Binding OrderGuideReleased}">
+        <FlyoutItem.Icon>
+            <FontImageSource
+                FontFamily="FontAwesome"
+                Glyph="{x:Static util:FontAwesomeHelper.CartShoppingFast}"
+                Color="{AppThemeBinding Light={StaticResource Black},
+                                        Dark={StaticResource White}}" />
+        </FlyoutItem.Icon>
+        <Tab Title="Order Guide" Icon="{FontImage FontFamily=FontAwesome, Glyph={x:Static util:FontAwesomeHelper.BasketShopping}}">
+            <ShellContent ContentTemplate="{DataTemplate views:BlankPage}" Route="BlankPage" />
+        </Tab>
+        <Tab Title="Purchase Orders" Icon="{FontImage FontFamily=FontAwesome, Glyph={x:Static util:FontAwesomeHelper.CartShopping}}">
+            <ShellContent ContentTemplate="{DataTemplate views:BlankPage}" Route="BlankPage" />
+        </Tab>
+    </FlyoutItem>
+
+    <FlyoutItem Title="Order History" IsVisible="{Binding OrderHistoryReleased}">
+        <FlyoutItem.Icon>
+            <FontImageSource
+                FontFamily="FontAwesome"
+                Glyph="{x:Static util:FontAwesomeHelper.FileMagnifyingGlass}"
+                Color="{AppThemeBinding Light={StaticResource Black},
+                                        Dark={StaticResource White}}" />
+        </FlyoutItem.Icon>
+        <ShellContent
+            Title="Order History"
+            ContentTemplate="{DataTemplate views:BatchesPage}"
+            Route="BatchesPage"
+            Shell.NavBarIsVisible="true" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Restaurants">
+        <FlyoutItem.Icon>
+            <FontImageSource
+                FontFamily="FontAwesome"
+                Glyph="{x:Static util:FontAwesomeHelper.Shop}"
+                Color="{AppThemeBinding Light={StaticResource Black},
+                                        Dark={StaticResource White}}" />
+        </FlyoutItem.Icon>
+        <ShellContent
+            Title="Restaurants"
+            ContentTemplate="{DataTemplate views:RestaurantsPage}"
+            Route="RestaurantsPage"
+            Shell.NavBarIsVisible="true" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="System">
+        <FlyoutItem.Icon>
+            <FontImageSource
+                FontFamily="FontAwesome"
+                Glyph="{x:Static util:FontAwesomeHelper.LayerGroup}"
+                Color="{AppThemeBinding Light={StaticResource Black},
+                                        Dark={StaticResource White}}" />
+        </FlyoutItem.Icon>
+
+        <Tab
+            Title="Vendors"
+            Icon="{FontImage FontFamily=FontAwesome,
+                             Glyph={x:Static util:FontAwesomeHelper.PersonDolly}}"
+            IsVisible="{Binding SystemVendorsReleased}">
+            <ShellContent ContentTemplate="{DataTemplate views:VendorsPage}" Route="VendorsPage" />
+        </Tab>
+        <Tab
+            Title="Units"
+            Icon="{FontImage FontFamily=FontAwesome,
+                             Glyph={x:Static util:FontAwesomeHelper.TableCells}}"
+            IsVisible="{Binding SystemUnitsReleased}">
+            <ShellContent ContentTemplate="{DataTemplate views:BlankPage}" Route="UnitsPage" />
+        </Tab>
+        <Tab
+            Title="Zones"
+            Icon="{FontImage FontFamily=FontAwesome,
+                             Glyph={x:Static util:FontAwesomeHelper.Wrench}}"
+            IsVisible="{Binding SystemZonesReleased}">
+            <ShellContent ContentTemplate="{DataTemplate views:BlankPage}" Route="ZonesPage" />
+        </Tab>
+    </FlyoutItem>
+
+    <Shell.FlyoutFooter>
+        <StackLayout Padding="20">
+            <Button
+                Command="{Binding SignOutCommand}"
+
+                Text="Sign Out" />
+        </StackLayout>
+    </Shell.FlyoutFooter>
 
     <Shell.FlyoutHeaderTemplate>
         <DataTemplate>
-            <Grid BackgroundColor="#bdbbb7" >
-                <controls:LogoView
-                    Size="36">
-                    
-                </controls:LogoView>
+            <Grid BackgroundColor="#bdbbb7">
+                <controls:LogoView Size="36" />
             </Grid>
         </DataTemplate>
     </Shell.FlyoutHeaderTemplate>

@@ -5,6 +5,8 @@
              xmlns:viewModels="clr-namespace:BestUnitPriceApp.ViewModels"
              x:Class="BestUnitPriceApp.Views.LoginPage"
              x:DataType="viewModels:LoginViewModel"
+             BackgroundColor="{AppThemeBinding Light={StaticResource Gray300},
+                                        Dark={StaticResource Gray300}}"
              Title="Login">
 
 
@@ -44,8 +46,8 @@
                 HeightRequest="50"
                 Padding="0,0,0,0"
                 Text="Log in"
-                FontFamily="BlackOpsOne"
-                TextColor="White" />
+                TextColor="{AppThemeBinding Light={StaticResource Black},
+                                        Dark={StaticResource White}}" />
             <Label
                 FontAttributes="Italic"
                 FontSize="18"
@@ -60,7 +62,8 @@
                 IsVisible="False"
                 Text="Forgotten password?" />
             <ActivityIndicator
-                Color="{StaticResource Primary}"
+                Color="{AppThemeBinding Light={StaticResource Black},
+                                        Dark={StaticResource White}}"
                 IsVisible="{Binding ValidateLoginCommand.IsRunning}"
                 IsRunning="{Binding ValidateLoginCommand.IsRunning}" />
         </VerticalStackLayout>

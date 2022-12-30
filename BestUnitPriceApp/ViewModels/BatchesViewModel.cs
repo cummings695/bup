@@ -1,3 +1,6 @@
+using BestUnitPriceApp.Common.Messages;
+using CommunityToolkit.Mvvm.Messaging;
+
 namespace BestUnitPriceApp.ViewModels;
 
 public partial class BatchesViewModel : BaseViewModel, IObserver<Restaurant>, IDisposable
@@ -17,16 +20,20 @@ public partial class BatchesViewModel : BaseViewModel, IObserver<Restaurant>, ID
     public BatchesViewModel(
         ICurrentUserService currentUserService,
         IBatchService batchService,
-        IConnectivity connectivity,
-        SelectedRestaurantTracker selectedRestaurantTracker)
+        IConnectivity connectivity)
     {
         _batchService = batchService;
         _connectivity = connectivity;
 
         Title = "Order History";
 
-        if (selectedRestaurantTracker != null)
-            _unsubscriber = selectedRestaurantTracker.Subscribe(this);
+        WeakReferenceMessenger.Default.Register<SelectedRestaurantChangedMessage>(this, (r, m) =>
+        {
+            // Handle the message here, with r being the recipient and m being the
+            // input message. Using the recipient passed as input makes it so that
+            // the lambda expression doesn't capture "this", improving performance.
+            OnRefreshing();
+        });
     }
 
     [RelayCommand]
@@ -102,6 +109,6 @@ public partial class BatchesViewModel : BaseViewModel, IObserver<Restaurant>, ID
 
     public void OnNext(Restaurant value)
     {
-        LoadDataAsync().Wait();
+        //LoadDataAsync().Wait();
     }
 }

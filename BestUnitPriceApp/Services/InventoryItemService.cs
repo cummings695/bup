@@ -17,12 +17,17 @@ internal class InventoryItemService : BaseEntityService<InventoryItem>, IInvento
         _currentUserService = currentUserService;
     }
 
-    public async Task<PagedList<InventoryItem>> GetByZoneAsync(long zoneId, int? page, int? pageSize)
+    public async Task<PagedList<InventoryItem>> GetByZoneAsync(long zoneId, int? page, int? pageSize, bool? active = null)
     {
-        var url = $"api/inventoryitems?zoneid={zoneId}";
+        var url = $"api/inventoryitems?zoneid={zoneId}&hydrationlevel=3";
         if (page.HasValue && pageSize.HasValue)
         {
             url += $"&page={page}&pagesize={pageSize}";
+        }
+
+        if (active.HasValue)
+        {
+            url += $"&active={active}";
         }
         
         Uri uri = new Uri(string.Format(Constants.RestUrl, url));

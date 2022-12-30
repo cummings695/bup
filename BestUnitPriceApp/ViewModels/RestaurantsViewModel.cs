@@ -1,12 +1,13 @@
-﻿namespace BestUnitPriceApp.ViewModels;
+﻿using BestUnitPriceApp.Common.Messages;
+using CommunityToolkit.Mvvm.Messaging;
+
+namespace BestUnitPriceApp.ViewModels;
 
 public partial class RestaurantsViewModel : BaseViewModel
 {
     private readonly IRestaurantService _restaurantService;
-    private readonly SelectedRestaurantTracker _selectedRestaurantTracker;
     private readonly IConnectivity _connectivity;
     private readonly ICurrentRestaurantService _currentRestaurantService;
-    private readonly RestaurantReporter _reporter; 
 
     [ObservableProperty]
     bool _isRefreshing;
@@ -20,16 +21,12 @@ public partial class RestaurantsViewModel : BaseViewModel
     public RestaurantsViewModel(
         IRestaurantService restaurantService,
         ICurrentUserService currentUserService,
-        SelectedRestaurantTracker selectedRestaurantTracker,
         ICurrentRestaurantService currentRestaurantService,
         IConnectivity connectivity)
     {
-        _selectedRestaurantTracker = selectedRestaurantTracker;
         _restaurantService = restaurantService;
         _connectivity = connectivity;
         _currentRestaurantService = currentRestaurantService;
-        _reporter = new RestaurantReporter("Default");
-        _reporter.Subscribe(_selectedRestaurantTracker);
 
         Title = "Restaurants";
         
@@ -54,12 +51,12 @@ public partial class RestaurantsViewModel : BaseViewModel
     [RelayCommand]
     public async Task LoadMore()
     {
-        var items = await _restaurantService.GetAsync();
+        //var items = await _restaurantService.GetAsync();
 
-        foreach (var item in items)
-        {
-            Items.Add(item);
-        }
+        //foreach (var item in items)
+        //{
+        //    Items.Add(item);
+        //}
     }
 
     public async Task LoadDataAsync()
@@ -79,9 +76,10 @@ public partial class RestaurantsViewModel : BaseViewModel
     [RelayCommand]
     public async Task SelectRestaurant(Restaurant restaurant)
     {
-        if (_currentRestaurantService.CurrentRestaurant.Id != restaurant.Id)
+        if (_currentRestaurantService.CurrentRestaurant?.Id != restaurant.Id)
         {
-            _selectedRestaurantTracker.TrackRestaurant(restaurant);
+            //_selectedRestaurantTracker.TrackRestaurant(restaurant);
+            WeakReferenceMessenger.Default.Send(new SelectedRestaurantChangedMessage(restaurant));
         }
     }
 }

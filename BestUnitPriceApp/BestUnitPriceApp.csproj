@@ -53,6 +53,12 @@
 	  <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.1" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="Views\BlankPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 <!--	<ItemGroup>-->
 <!--	  <MauiXaml Update="Views\Controls\LogoView.xaml">-->
 <!--	    <Generator>MSBuild:Compile</Generator>-->

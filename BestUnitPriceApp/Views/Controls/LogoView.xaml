@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<HorizontalStackLayout 
+<HorizontalStackLayout
+    x:Class="BestUnitPriceApp.Views.Controls.LogoView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:util="clr-namespace:BestUnitPriceApp.Utilities"
-    x:Class="BestUnitPriceApp.Views.Controls.LogoView"
     Padding="5"
     VerticalOptions="Center">
     <Label
+        Margin="0,13,0,0"
         FontFamily="FontAwesome"
         FontSize="{Binding LogoSize}"
-        Margin="0,13,0,0"
         Text="{x:Static util:FontAwesomeHelper.TruckRampBox}" />
-    <Label 
+    <Label
         FontAttributes="Bold"
         FontFamily="BlackOpsOne"
         FontSize="{Binding LogoSize}"
@@ -38,6 +38,6 @@
         TextColor="{StaticResource Primary}"
         TextTransform="Uppercase"
         VerticalTextAlignment="Center" />
-    
-    <Label Text="{Binding Size}"></Label>
+
+    <Label Text="{Binding Size}" />
 </HorizontalStackLayout>

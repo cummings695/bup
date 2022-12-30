@@ -1,4 +1,6 @@
-﻿using System.Reflection.PortableExecutable;
+﻿using BestUnitPriceApp.Common.Messages;
+using CommunityToolkit.Mvvm.Messaging;
+using System.Reflection.PortableExecutable;
 
 namespace BestUnitPriceApp.ViewModels;
 
@@ -12,12 +14,12 @@ public partial class ItemsViewModel : BaseViewModel, IObserver<Restaurant>, IDis
     readonly IInventoryItemService _inventoryItemService;
     readonly IZoneService _zoneService;
 
-    [ObservableProperty] bool isRefreshing;
+    [ObservableProperty] bool _isRefreshing;
 
     [ObservableProperty] private Zone _selectedZone;
 
-    [ObservableProperty] ObservableCollection<InventoryItem> items;
-    [ObservableProperty] ObservableCollection<Zone> zones;
+    [ObservableProperty] ObservableCollection<InventoryItem> _items;
+    [ObservableProperty] ObservableCollection<Zone> _zones;
     
     private IDisposable _unsubscriber;
 
@@ -25,8 +27,7 @@ public partial class ItemsViewModel : BaseViewModel, IObserver<Restaurant>, IDis
         ICurrentUserService currentUserService,
         IZoneService zoneService,
         IInventoryItemService inventoryItemService,
-        IConnectivity connectivity,
-        SelectedRestaurantTracker selectedRestaurantTracker)
+        IConnectivity connectivity)
     {
         dataService = service;
         _zoneService = zoneService;
@@ -35,8 +36,10 @@ public partial class ItemsViewModel : BaseViewModel, IObserver<Restaurant>, IDis
 
         Title = "Items";
 
-        if (selectedRestaurantTracker != null)
-            _unsubscriber = selectedRestaurantTracker.Subscribe(this);
+        WeakReferenceMessenger.Default.Register<SelectedRestaurantChangedMessage>(this, (rec, m) =>
+        {
+            OnRefreshing();
+        });
     }
 
     [RelayCommand]
@@ -65,7 +68,7 @@ public partial class ItemsViewModel : BaseViewModel, IObserver<Restaurant>, IDis
         }
 
         _page += 1;
-        var result = await _inventoryItemService.GetByZoneAsync(this._selectedZone.Id, _page, _pageSize);
+        var result = await _inventoryItemService.GetByZoneAsync(this._selectedZone.Id, _page, _pageSize, true);
 
         foreach (var item in result.Items)
         {
@@ -82,7 +85,7 @@ public partial class ItemsViewModel : BaseViewModel, IObserver<Restaurant>, IDis
             return;
         }
 
-        var result = await _inventoryItemService.GetByZoneAsync(this._selectedZone.Id, _page, _pageSize);
+        var result = await _inventoryItemService.GetByZoneAsync(this._selectedZone.Id, _page, _pageSize, true);
         Items = new ObservableCollection<InventoryItem>(result.Items);
     }
 

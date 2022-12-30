@@ -1,4 +1,7 @@
-﻿using BestUnitPriceApp.Views.Popups;
+﻿using BestUnitPriceApp.Common.Messages;
+using BestUnitPriceApp.Views.Popups;
+using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace BestUnitPriceApp.ViewModels;
 
@@ -10,7 +13,6 @@ public partial class LoadingViewModel : BaseViewModel
     private readonly ICurrentUserService _currentUserService;
     private readonly ICurrentRestaurantService _currentRestaurantService;
     private readonly IRestaurantService _restaurantService;
-    private readonly SelectedRestaurantTracker _selectedRestaurantTracker;
 
     [ObservableProperty] private bool _isLoading = true;
 
@@ -18,8 +20,6 @@ public partial class LoadingViewModel : BaseViewModel
         ICurrentUserService currentUserService,
         IAuthenticationService authenticationService,
         IConnectivity connectivity,
-        IGeolocation geolocation,
-        SelectedRestaurantTracker selectedRestaurantTracker,
         ICurrentRestaurantService currentRestaurantService,
         IRestaurantService restaurantService)
     {
@@ -29,38 +29,55 @@ public partial class LoadingViewModel : BaseViewModel
         _restaurantService = restaurantService;
         _authenticationService = authenticationService;
         _currentRestaurantService = currentRestaurantService;
-        _selectedRestaurantTracker = selectedRestaurantTracker;
-
-        CheckUserAuthentication();
     }
-    
-        private async void CheckUserAuthentication()
+
+    public async Task CheckUserAuthentication()
     {
         if (await CheckAuthentication())
         {
             var user = _currentUserService.Get();
             // load the users restaurants
-            //if (_currentRestaurantService.Restaurant != null)
-            //    await Shell.Current.GoToAsync($"//{nameof(RestaurantPage)}");
+            if (_currentRestaurantService.CurrentRestaurant == null)
+            {
+                if (DeviceInfo.Platform == DevicePlatform.WinUI)
+                {
+                    Shell.Current.Dispatcher.Dispatch(async () =>
+                    {
+                        await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+                    });
+                }
+                await Shell.Current.DisplayAlert("No Restaurant!",
+                    $"Select a restaurant to continue.", "OK");
+                //await Shell.Current.GoToAsync($"//{nameof(RestaurantsPage)}");
+                return;
+            }
+
 
             // does the user have a selected Restaurant assigned.
             if (_currentUserService.Get().SelectedRestaurantId == null)
                 _currentUserService.Get().SelectedRestaurantId = 3;
-                //await Shell.Current.GoToAsync($"//{nameof(RestaurantPage)}");
+            //await Shell.Current.GoToAsync($"//{nameof(RestaurantPage)}");
 
             var restaurant = await _restaurantService.GetAsync(_currentUserService.Get().SelectedRestaurantId.Value);
 
             if (restaurant == null)
                 throw new ApplicationException("ASDFADS ASDFSDF ASDF ADSF F");
-                //await Shell.Current.GoToAsync($"//{nameof(RestaurantPage)}");
+            //await Shell.Current.GoToAsync($"//{nameof(RestaurantPage)}");
 
-            _selectedRestaurantTracker.TrackRestaurant(restaurant);
+            WeakReferenceMessenger.Default.Send(new SelectedRestaurantChangedMessage(restaurant));
 
             await Shell.Current.GoToAsync($"//{nameof(ItemsPage)}");
         }
         else
         {
-            
+            if (DeviceInfo.Platform == DevicePlatform.WinUI)
+            {
+                Shell.Current.Dispatcher.Dispatch(async () =>
+                {
+                    await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+                });
+                return;
+            }
             await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
         }
     }
@@ -74,7 +91,7 @@ public partial class LoadingViewModel : BaseViewModel
             return false;
         }
 
-        //_currentUserService.Clear();
+        _currentUserService.Clear();
 
         // determine if we are logged in.
         var user = _currentUserService.Get();
@@ -88,8 +105,8 @@ public partial class LoadingViewModel : BaseViewModel
         var response = await _authenticationService.RefreshAsync(user.Token, user.RefreshToken);
 
         return response.Match(
-            b => { return true; },
-            e => { return false; });
+            b => true,
+            e => false);
     }
 
     public void DisplayRestaurantPicker(View views)
