@@ -16,12 +16,11 @@
     <ShellContent
         Title="Loading"
         ContentTemplate="{DataTemplate views:LoadingPage}"
-        FlyoutItemIsVisible="False"
+        FlyoutItemIsVisible="false"
         Icon="iconblank.png"
         Route="LoadingPage"
         Shell.NavBarIsVisible="true" />
-
-
+    
     <ShellContent
         Title="Login"
         ContentTemplate="{DataTemplate views:LoginPage}"
