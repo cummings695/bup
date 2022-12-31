@@ -6,16 +6,21 @@
     xmlns:util="clr-namespace:BestUnitPriceApp.Utilities"
     xmlns:vm="clr-namespace:BestUnitPriceApp.ViewModels"
     x:DataType="vm:AppTitleViewModel">
-    <HorizontalStackLayout>
+    <HorizontalStackLayout Margin="15,0,0,0">
         <Label
             HorizontalOptions="Center"
             Text="{Binding Title}"
+            TextColor="{AppThemeBinding Light={StaticResource White},
+                                        Dark={StaticResource White}}"
+            FontSize="24"
             VerticalOptions="Center" />
         <Label
             Margin="0,0,3,0"
+            FontSize="28"
             FontFamily="FontAwesome"
             Text="{x:Static util:FontAwesomeHelper.PersonDolly}"
-            TextColor="{StaticResource Yellow300Accent}"
+            TextColor="{AppThemeBinding Light={StaticResource White},
+                                        Dark={StaticResource White}}"
             VerticalOptions="Center" />
     </HorizontalStackLayout>
 </ContentView>

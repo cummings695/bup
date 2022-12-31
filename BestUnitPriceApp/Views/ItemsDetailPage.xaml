@@ -6,7 +6,6 @@
     xmlns:models="clr-namespace:BestUnitPriceApp.Models"
     xmlns:vm="clr-namespace:BestUnitPriceApp.ViewModels"
     x:DataType="vm:ItemsDetailViewModel">
-    <ScrollView>
         <Grid RowDefinitions="auto,*">
             <Border Grid.Row="0">
                 <StackLayout>
@@ -86,5 +85,4 @@
             </Border>
 
         </Grid>
-    </ScrollView>
 </ContentPage>
