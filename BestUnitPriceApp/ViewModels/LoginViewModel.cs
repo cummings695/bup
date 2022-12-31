@@ -21,10 +21,10 @@ public partial class LoginViewModel : BaseViewModel
     }
 
     [ObservableProperty]
-    private string _email;
+    private string _email = "pkinecki@gmail.com";
 
     [ObservableProperty]
-    private string _password;
+    private string _password = "tempP@ssW0rd";
 
     [ObservableProperty]
     private string _errorMessage;
