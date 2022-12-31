@@ -2,13 +2,10 @@
 
 public partial class ZonesViewModel : BaseViewModel
 {
-    private int _page = 1;
-    private int _pageSize = 30;
-
     readonly IConnectivity _connectivity;
     private readonly IZoneService _zoneService;
 
-    [ObservableProperty] bool isRefreshing;
+    [ObservableProperty] bool _isRefreshing;
 
     [ObservableProperty] ObservableCollection<Zone> _zones;
 
@@ -24,10 +21,8 @@ public partial class ZonesViewModel : BaseViewModel
     [RelayCommand]
     private async void OnRefreshing()
     {
-        _page = 1;
         IsRefreshing = true;
         await LoadDataAsync();
-
         IsRefreshing = false;
     }
 
@@ -42,7 +37,7 @@ public partial class ZonesViewModel : BaseViewModel
         if (IsBusy)
             return;
 
-        _page = 1;
+        IsBusy = true;
 
         var results = await _zoneService.GetAsync();
 
@@ -56,7 +51,7 @@ public partial class ZonesViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async void GoToDetails(Vendor vendor)
+    private async void GoToDetails(Zone zone)
     {
         //await Shell.Current.GoToAsync(nameof(ZonesDetailPage), true,
         //    new Dictionary<string, object> { { "Zone", Zone } });
