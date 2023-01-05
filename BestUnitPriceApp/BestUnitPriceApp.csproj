@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net7.0;net7.0-android;net7.0-ios;net7.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks>net7.0-android;net7.0-ios;net7.0-maccatalyst</TargetFrameworks>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
-		<OutputType Condition="'$(TargetFramework)' != 'net7.0'">Exe</OutputType>
+		<OutputType>Exe</OutputType>
 		<RootNamespace>BestUnitPriceApp</RootNamespace>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
@@ -29,7 +29,7 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\best-unit-price-logo.svg" Color="#512BD4" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
@@ -86,10 +86,28 @@
 <!--	  </MauiXaml>-->
 <!--	</ItemGroup>-->
 
+	<ItemGroup>
+	  <None Remove="Platforms\iOS\Services\" />
+	  <None Remove="Platforms\Android\Services\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Platforms\iOS\Services\" />
+	  <Folder Include="Platforms\Android\Services\" />
+	</ItemGroup>
 	<PropertyGroup Label="MauiAppAccelerator">
 		<wizardVersion>v1.1.1</wizardVersion>
 		<projectType>MVVMToolkit</projectType>
 		<framework>Flyout</framework>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
+	  <CreatePackage>false</CreatePackage>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	  <DefineConstants>TRACE;DEBUG;NET;NET7_0;NETCOREAPP</DefineConstants>
+	  <WarningLevel>4</WarningLevel>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
+	  <CreatePackage>false</CreatePackage>
+	</PropertyGroup>
 </Project>

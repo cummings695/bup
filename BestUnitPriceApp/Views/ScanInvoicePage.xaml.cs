@@ -8,8 +8,16 @@ namespace BestUnitPriceApp.Views;
 
 public partial class ScanInvoicePage : ContentPage
 {
-    public ScanInvoicePage()
+    private readonly ScanInvoiceViewModel _viewModel;
+    public ScanInvoicePage(ScanInvoiceViewModel viewModel)
     {
         InitializeComponent();
+        BindingContext = _viewModel = viewModel;
+    }
+
+    protected override async void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        base.OnNavigatedTo(args);
+        await _viewModel.ScanInvoice();
     }
 }

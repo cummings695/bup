@@ -1,6 +1,13 @@
-﻿using BestUnitPriceApp.Views;
+﻿using BestUnitPriceApp.Services.Interfaces;
+using BestUnitPriceApp.Views;
 using BestUnitPriceApp.Views.Controls;
+#if IOS
+	using BestUnitPriceApp.Platforms.IOS.Services;
+#elif ANDROID
+	using BestUnitPriceApp.Platforms.Android.Services;
+#else
 
+#endif
 namespace BestUnitPriceApp;
 
 public static class MauiProgram
@@ -96,7 +103,16 @@ public static class MauiProgram
         builder.Services.AddSingleton<AppTitleViewModel>();
         builder.Services.AddSingleton<AppTitleView>();
 
+        builder.Services.AddSingleton<ScanInvoiceViewModel>();
+        builder.Services.AddSingleton<ScanInvoicePage>();
+#if IOS
+		builder.Services.AddTransient<IInvoiceScannerService,IOSInvoiceScannerService>();
+#elif ANDROID
+        builder.Services.AddTransient<IInvoiceScannerService, AndroidInvoiceScannerService>();
+#else
 
-        return builder.Build();
+#endif
+
+		return builder.Build();
 	}
 }

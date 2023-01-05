@@ -7,10 +7,9 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace BestUnitPriceApp.Common.Messages;
 
-    internal class SelectedRestaurantChangedMessage : ValueChangedMessage<Restaurant>
+internal class SelectedRestaurantChangedMessage : ValueChangedMessage<Restaurant>
+{
+    public SelectedRestaurantChangedMessage(Restaurant value) : base(value)
     {
-        public SelectedRestaurantChangedMessage(Restaurant value) : base(value)
-        {
-        }
     }
-
+}

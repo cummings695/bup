@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <ContentPage
     x:Class="BestUnitPriceApp.Views.ScanInvoicePage"
@@ -8,6 +8,9 @@
     xmlns:vm="clr-namespace:BestUnitPriceApp.ViewModels"
     x:DataType="vm:ScanInvoiceViewModel">
     <ContentPage.Content>
-        <Label Text="SCAN INVOICES" />
+        <Grid RowDefinitions="40,*">
+            <Label Grid.Row="0" Text="SCAN INVOICES" />
+                <Image Grid.Row="1" Source="{Binding ScannedImage}" Aspect="AspectFit"/>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

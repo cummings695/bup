@@ -14,4 +14,10 @@ public partial class BatchesDetailViewModel : BaseViewModel
             { "Order", order }
         });
     }
+
+    [RelayCommand]
+    private async void ScanOrder(Order order)
+    {
+        await Shell.Current.GoToAsync($"/{nameof(ScanInvoicePage)}");
+    }
 }
